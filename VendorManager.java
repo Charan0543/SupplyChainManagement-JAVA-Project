@@ -15,11 +15,17 @@ public class VendorManager {
     }
 
     public void enumerateVendors() {
-        System.out.println("\nSUPPLIER LIST (Total: " + vendorCount + ")");
+        System.out.println("\n==============================================");
+        System.out.println("        SUPPLIER LIST (Total: " + vendorCount + ")");
+        System.out.println("==============================================");
         Enumeration<Vendor> vendors = vendorMap.elements();
-        while(vendors.hasMoreElements()) {
+        while (vendors.hasMoreElements()) {
             Vendor v = vendors.nextElement();
-            System.out.println("ID: " + v.getVendorId() + " | Name: " + v.getName() + " | Rating: " + v.getRating());
+            System.out.println(" ID: " + v.getVendorId());
+            System.out.println(" Name: " + v.getName());
+            System.out.println(" Rating: " + v.getRating());
+            System.out.println("----------------------------------------------");
         }
+        System.out.println("==============================================\n");
     }
 }

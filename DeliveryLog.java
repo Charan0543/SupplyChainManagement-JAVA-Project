@@ -16,17 +16,18 @@ public class DeliveryLog {
     }
 
     public void printAllLogs() {
-        System.out.println("\n--------------------------------------------------");
-        System.out.println("DELIVERY LOG");
-        System.out.println("--------------------------------------------------");
+        System.out.println("\n==============================================");
+        System.out.println("                 DELIVERY LOG                 ");
+        System.out.println("----------------------------------------------");
         if (deliveryHistory.isEmpty()) {
-            System.out.println("No history.");
-            System.out.println("--------------------------------------------------");
+            System.out.println("             No history recorded.             ");
+            System.out.println("==============================================\n");
             return;
         }
         for (String log : deliveryHistory) {
-            System.out.println(log);
+            System.out.println("> " + log);
+            System.out.println("----------------------------------------------");
         }
-        System.out.println("--------------------------------------------------");
+        System.out.println("==============================================\n");
     }
 }

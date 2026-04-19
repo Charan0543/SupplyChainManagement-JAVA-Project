@@ -54,7 +54,7 @@ public class SCMSGUI extends JFrame {
 
         // controls
         JPanel controlPanel = new JPanel();
-        controlPanel.setLayout(new GridLayout(2, 1));
+        controlPanel.setLayout(new BorderLayout(0, 15)); // Add vertical gap between sections
         controlPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // order form
@@ -67,10 +67,27 @@ public class SCMSGUI extends JFrame {
         
         formPanel.add(new JLabel("Order ID:"));
         formPanel.add(poIdField);
+        formPanel.add(Box.createHorizontalStrut(10));
+        JSeparator fsep1 = new JSeparator(SwingConstants.VERTICAL);
+        fsep1.setPreferredSize(new Dimension(1, 20));
+        formPanel.add(fsep1);
+        formPanel.add(Box.createHorizontalStrut(10));
+
         formPanel.add(new JLabel("Supplier ID:"));
         formPanel.add(vendorIdField);
+        formPanel.add(Box.createHorizontalStrut(10));
+        JSeparator fsep2 = new JSeparator(SwingConstants.VERTICAL);
+        fsep2.setPreferredSize(new Dimension(1, 20));
+        formPanel.add(fsep2);
+        formPanel.add(Box.createHorizontalStrut(10));
+
         formPanel.add(new JLabel("Deadline (Days):"));
         formPanel.add(deadlineDaysField);
+        formPanel.add(Box.createHorizontalStrut(10));
+        JSeparator fsep3 = new JSeparator(SwingConstants.VERTICAL);
+        fsep3.setPreferredSize(new Dimension(1, 20));
+        formPanel.add(fsep3);
+        formPanel.add(Box.createHorizontalStrut(10));
 
         JButton addOrderBtn = new JButton("Place Order in Line");
         addOrderBtn.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -98,15 +115,20 @@ public class SCMSGUI extends JFrame {
                 vendorIdField.setText("");
                 deadlineDaysField.setText("");
             } catch (NumberFormatException ex) {
-                System.out.println("[Error] Deadline days must be a number!");
+                System.out.println("\n==============================================");
+                System.out.println("Error: Deadline days must be a number!");
+                System.out.println("==============================================");
             } catch (Exception ex) {
-                System.out.println("[Error] Invalid input: " + ex.getMessage());
+                System.out.println("\n==============================================");
+                System.out.println("Error: Invalid input: " + ex.getMessage());
+                System.out.println("==============================================");
             }
         });
         formPanel.add(addOrderBtn);
 
         // buttons
         JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        actionPanel.setBorder(BorderFactory.createTitledBorder("System Actions"));
         
         JButton showVendorsBtn = new JButton("Show All Suppliers");
         showVendorsBtn.addActionListener(e -> vendorManager.enumerateVendors());
@@ -126,30 +148,59 @@ public class SCMSGUI extends JFrame {
 
         JButton confirmArrivalBtn = new JButton("Confirm Truck Arrival");
         confirmArrivalBtn.addActionListener(e -> {
+            System.out.println("\n==============================================");
             if (waitingTrucks.isEmpty()) {
                 System.out.println("No deliveries waiting for confirmation.");
             } else {
-                // get the latest truck and log it
+                // take latest pending truck from waiting list
                 int lastIndex = waitingTrucks.size() - 1;
                 String id = waitingTrucks.get(lastIndex);
                 waitingTrucks.remove(lastIndex);
                 
+                // print arrival status
+                System.out.println("[Delivery Truck-" + id + "] has: Arrived at Store");
+                
+                // push to delivery log stack
                 deliveryLog.logDelivery("Truck " + id + " arrived safely at timestamp " + System.currentTimeMillis());
-                System.out.println("Truck " + id + " arrival confirmed and logged.");
             }
+            System.out.println("==============================================");
         });
 
         JButton clearConsoleBtn = new JButton("Clear Console");
         clearConsoleBtn.addActionListener(e -> consoleTextArea.setText(""));
 
         actionPanel.add(showVendorsBtn);
+        actionPanel.add(Box.createHorizontalStrut(5));
+        JSeparator s1 = new JSeparator(SwingConstants.VERTICAL);
+        s1.setPreferredSize(new Dimension(1, 25));
+        actionPanel.add(s1);
+        actionPanel.add(Box.createHorizontalStrut(5));
+
         actionPanel.add(processNextBtn);
+        actionPanel.add(Box.createHorizontalStrut(5));
+        JSeparator s2 = new JSeparator(SwingConstants.VERTICAL);
+        s2.setPreferredSize(new Dimension(1, 25));
+        actionPanel.add(s2);
+        actionPanel.add(Box.createHorizontalStrut(5));
+
         actionPanel.add(confirmArrivalBtn);
+        actionPanel.add(Box.createHorizontalStrut(5));
+        JSeparator s3 = new JSeparator(SwingConstants.VERTICAL);
+        s3.setPreferredSize(new Dimension(1, 25));
+        actionPanel.add(s3);
+        actionPanel.add(Box.createHorizontalStrut(5));
+
         actionPanel.add(viewLogsBtn);
+        actionPanel.add(Box.createHorizontalStrut(5));
+        JSeparator s4 = new JSeparator(SwingConstants.VERTICAL);
+        s4.setPreferredSize(new Dimension(1, 25));
+        actionPanel.add(s4);
+        actionPanel.add(Box.createHorizontalStrut(5));
+
         actionPanel.add(clearConsoleBtn);
 
-        controlPanel.add(formPanel);
-        controlPanel.add(actionPanel);
+        controlPanel.add(formPanel, BorderLayout.NORTH);
+        controlPanel.add(actionPanel, BorderLayout.CENTER);
 
         // Add controls to window
         add(controlPanel, BorderLayout.SOUTH);
