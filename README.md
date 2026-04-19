@@ -1,5 +1,5 @@
 # SupplyChainManagement-JAVA-Project
-Project Guide :Mrs. T.Subba Reddy
+Project Guide :Dr. T. Subba Reddy
 
 This is a Java desktop application that simulates a procurement and delivery tracking system. I built this to demonstrate how to use core data structures, multithreading, and a database in a single Java Swing project.
 
